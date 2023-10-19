@@ -1,0 +1,19 @@
+
+compiler = pdflatex
+out_dir = build
+
+# run compiler twice because TeX compilers generate table of contents only on second run
+# ; means two commands on one line
+# pwsh -Comand used because for some reason behavior differs when i just invoke it and when i use ninja
+rule build_pdf_rule
+  command = pwsh -Command "$compiler $in -output-directory=$out_dir -quiet ; $compiler $in -output-directory=$out_dir -quiet"
+  description = "Building $out"
+
+# htlatex is worst i seen, i cannot specity output files or even not generate .dvi and all
+# useless things, i need only html
+rule build_html_rule
+  command = pwsh -Command "htlatex $in"
+  description = "Building html $out"
+
+build build_pdf: build_pdf_rule recursive_macros.tex
+build build_html: build_html_rule recursive_macros.tex
