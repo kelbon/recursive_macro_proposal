@@ -2,15 +2,12 @@
 compiler = pdflatex
 out_dir = build
 
-# run compiler twice because TeX compilers generate table of contents only on second run
-# ; means two commands on one line
-# pwsh -Comand used because for some reason behavior differs when i just invoke it and when i use ninja
+# run compiler twice because TeX compiler generate table of contents only on second run
 rule build_pdf_rule
   command = pwsh -Command "$compiler $in -output-directory=$out_dir -quiet ; $compiler $in -output-directory=$out_dir -quiet"
   description = "Building $out"
 
-# htlatex is worst i seen, i cannot specity output files or even not generate .dvi and all
-# useless things, i need only html
+# its not possible to specity requied formats and output dir, so htlatex will generate all it has
 rule build_html_rule
   command = pwsh -Command "htlatex $in"
   description = "Building html $out"
