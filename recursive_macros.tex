@@ -95,6 +95,11 @@ except name of the macro containing the \lstinline{__THIS_MACRO__} token in the 
 
 \medskip
 
+To handle infinite recursion, there are implementation defined recursion depth limit,
+like in other similar situations.
+
+\medskip
+
 This makes possible to write such macros:
 
 \begin{lstlisting}[language=C++]
@@ -162,6 +167,11 @@ of such macro always replaced during [cpp.rescan]}
 If the name of the macro being replaced is found during this scan of the replacement list (not including the rest of the source file's preprocessing tokens)
 \textcolor{green}{and its definition does not contain \lstinline{__THIS_MACRO__} token, }
 it is not replaced. Furthermore, if any nested replacements encounter the name of the macro being replaced, it is not replaced. These nonreplaced macro name preprocessing tokens are no longer available for further replacement even if they are later (re)examined in contexts in which that macro name preprocessing token would otherwise have been replaced.
+\end{quote}
+
+\href{https://eel.is/c++draft/#implimits}{[implimits]}
+\begin{quote}
+\textcolor{green}{Recursively nested macro name expansion[2048]}
 \end{quote}
 
 \section{Implementation experience}

@@ -141,8 +141,10 @@ name in macro definition, except name of the macro containing the <code class="l
 token in the definition replaced in <a 
 href="https://eel.is/c++draft/cpp.rescan" >[cpp.rescan]</a> even if it is found during scan of
 the replacement list
-<!--l. 98--><p class="noindent" >This makes possible to write such macros:
-<!--l. 100-->
+<!--l. 98--><p class="noindent" >To handle infinite recursion, there are implementation defined recursion depth
+limit, like in other similar situations.
+<!--l. 103--><p class="noindent" >This makes possible to write such macros:
+<!--l. 105-->
 
 <pre class="lstlisting" id="listing-5"><span class="label"><a 
  id="x1-4001r1"></a></span><span style="color:#0000FF"><span 
@@ -191,7 +193,7 @@ class="cmtt-10">(+,</span></span><span style="color:#000000"> </span><span style
 class="cmtt-10">1,</span></span><span style="color:#000000"> </span><span style="color:#000000"><span 
 class="cmtt-10">2,</span></span><span style="color:#000000"> </span><span style="color:#000000"><span 
 class="cmtt-10">3);</span></span></pre>
-<!--l. 107--><p class="noindent" >Calculate count of tokens <!--l. 108-->
+<!--l. 112--><p class="noindent" >Calculate count of tokens <!--l. 113-->
 
 <pre class="lstlisting" id="listing-6"><span class="label"><a 
  id="x1-4005r1"></a></span><span style="color:#0000FF"><span 
@@ -264,7 +266,7 @@ class="cmtt-10">"</span></span><span style="color:#FF0000"><span
 class="cmtt-10">gdfdg</span></span><span style="color:#FF0000"><span 
 class="cmtt-10">"</span></span><span style="color:#000000"><span 
 class="cmtt-10">)</span></span></pre>
-<!--l. 120--><p class="noindent" >Replace for boost::pfr code generation script: <!--l. 121-->
+<!--l. 125--><p class="noindent" >Replace for boost::pfr code generation script: <!--l. 126-->
 
 <pre class="lstlisting" id="listing-7"><span class="label"><a 
  id="x1-4015r1"></a></span> 
@@ -468,27 +470,27 @@ class="cmtt-10">);</span></span>
 <span class="label"><a 
  id="x1-4028r14"></a></span><span style="color:#000000"><span 
 class="cmtt-10">}</span></span></pre>
-<!--l. 139--><p class="noindent" >
+<!--l. 144--><p class="noindent" >
                                                                           
 
                                                                           
 <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-50004"></a>Proposed wording</h3>
-<!--l. 143--><p class="noindent" ><a 
+<!--l. 148--><p class="noindent" ><a 
 href="https://eel.is/c++draft/cpp#replace.general-6" >[cpp.replace.general]</a>
-<!--l. 145--><p class="noindent" >
+<!--l. 150--><p class="noindent" >
       <blockquote class="quote">
-      <!--l. 146--><p class="noindent" >The identifiers <span id="textcolor1"><code class="lstinline"><span style="color:#00FF00">__THIS_MACRO__</span></code>,</span> <code class="lstinline"><span style="color:#000000">__VA_ARGS__</span></code> and <code class="lstinline"><span style="color:#000000">__VA_OPT__</span></code> shall
+      <!--l. 151--><p class="noindent" >The identifiers <span id="textcolor1"><code class="lstinline"><span style="color:#00FF00">__THIS_MACRO__</span></code>,</span> <code class="lstinline"><span style="color:#000000">__VA_ARGS__</span></code> and <code class="lstinline"><span style="color:#000000">__VA_OPT__</span></code> shall
       occur only in the replacement-list of a function-like macro that
       uses the ellipsis notation in the parameters. <span id="textcolor2">Token <code class="lstinline"><span style="color:#00FF00">__THIS_MACRO__</span></code>
       behaves as if it is replaced by name of macro in which definition
       it appears, except name of such macro always replaced during
       [cpp.rescan]</span></blockquote>
-<!--l. 159--><p class="noindent" ><a 
+<!--l. 164--><p class="noindent" ><a 
 href="https://eel.is/c++draft/cpp#rescan-3" >[cpp.rescan]</a>
-<!--l. 161--><p class="noindent" >
+<!--l. 166--><p class="noindent" >
       <blockquote class="quote">
-      <!--l. 162--><p class="noindent" >If the name of the macro being replaced is found during this
+      <!--l. 167--><p class="noindent" >If the name of the macro being replaced is found during this
       scan of the replacement list (not including the rest of the
       source file&#8217;s preprocessing tokens) <span id="textcolor3">and its definition does not
       contain <code class="lstinline"><span style="color:#00FF00">__THIS_MACRO__</span></code> token, </span> it is not replaced. Furthermore,
@@ -498,10 +500,17 @@ href="https://eel.is/c++draft/cpp#rescan-3" >[cpp.rescan]</a>
       replacement even if they are later (re)examined in contexts in
       which that macro name preprocessing token would otherwise
       have been replaced.</blockquote>
-<!--l. 167--><p class="noindent" >
+<!--l. 172--><p class="noindent" ><a 
+href="https://eel.is/c++draft/#implimits" >[implimits]</a>
+      <blockquote class="quote">
+      <!--l. 174--><p class="noindent" ><span id="textcolor4">Recursively nested macro name expansion[2048]</span></blockquote>
+                                                                          
+
+                                                                          
+<!--l. 177--><p class="noindent" >
 <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-60005"></a>Implementation experience</h3>
-<!--l. 169--><p class="noindent" >The implementation in clang and examples, could be found <a 
+<!--l. 179--><p class="noindent" >The implementation in clang and examples, could be found <a 
 href="https://github.com/llvm/llvm-project/pull/65851" >here[link]</a>
  
 </body></html> 
